@@ -4,7 +4,7 @@ defmodule MrNaturalTest do
   doctest MrNatural
 
   property "natural sort" do
-    forall {a, b} <- {numeric_string(), numeric_string()}  do
+    forall {a, b} <- {numeric_string(), numeric_string()} do
       meets_standard_sort_properties(a, b)
       |> when_fail(IO.puts("""
           a: #{a}
