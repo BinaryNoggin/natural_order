@@ -70,7 +70,7 @@ defmodule MrNatural do
     |> String.downcase()
     |> split_integers(~r/(\p{Nd}+)|(\p{L}+)/u)
     |> List.flatten()
-    |> Enum.map(fn item -> convert_integers(item) end)
+    |> Enum.map(&convert_integers/1)
   end
 
   defp split_integers(string, regex), do: Regex.scan(regex, string, capture: :all_but_first)

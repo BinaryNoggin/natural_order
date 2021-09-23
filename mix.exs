@@ -26,7 +26,8 @@ defmodule MrNatural.MixProject do
 
   defp deps do
     [
-      {:propcheck, "~> 1.4", only: [:dev, :test]}
+      {:propcheck, "~> 1.4", only: [:dev, :test]},
+      {:ex_doc, "~> 0.25.3", only: [:dev], runtime: false}
     ]
   end
 
