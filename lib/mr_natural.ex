@@ -6,25 +6,25 @@ defmodule MrNatural do
 
   ## Examples of comparing two strings
 
-    iex> MrNatural.compare("String2", "String11")
-    :lt
+      iex> MrNatural.compare("String2", "String11")
+      :lt
 
-    iex> MrNatural.compare("String11", "String2")
-    :gt
+      iex> MrNatural.compare("String11", "String2")
+      :gt
 
-    iex> MrNatural.compare("string", "STRING")
-    :eq
+      iex> MrNatural.compare("string", "STRING")
+      :eq
 
   # Examples with sorting
 
-    iex> Enum.sort(["String2", "String11", "String3"], MrNatural)
-    ["String2", "String3",  "String11"]
+      iex> Enum.sort(["String2", "String11", "String3"], MrNatural)
+      ["String2", "String3",  "String11"]
 
-    iex> Enum.sort(["String2", "String11", "String3"], {:asc, MrNatural})
-    ["String2", "String3",  "String11"]
+      iex> Enum.sort(["String2", "String11", "String3"], {:asc, MrNatural})
+      ["String2", "String3",  "String11"]
 
-    iex> Enum.sort(["String2", "String11", "String3"], {:desc, MrNatural})
-    ["String11", "String3",  "String2"]
+      iex> Enum.sort(["String2", "String11", "String3"], {:desc, MrNatural})
+      ["String11", "String3",  "String2"]
   """
 
   @has_integers ~r/\p{Nd}+/u
@@ -34,14 +34,14 @@ defmodule MrNatural do
 
   ## Examples
 
-    iex> MrNatural.compare("String2", "String11")
-    :lt
+      iex> MrNatural.compare("String2", "String11")
+      :lt
 
-    iex> MrNatural.compare("String11", "String2")
-    :gt
+      iex> MrNatural.compare("String11", "String2")
+      :gt
 
-    iex> MrNatural.compare("string", "STRING")
-    :eq
+      iex> MrNatural.compare("string", "STRING")
+      :eq
   """
   def compare(a, b) do
     a = format_item(a)

@@ -26,7 +26,7 @@ To compare two strings directly.
   :gt
 ```
 
-Utilizing `Enum.sort/2`
+Using `Enum.sort/2`
 
 ```elixir
    iex> Enum.sort(["String2", "String11", "String3"], MrNatural)
@@ -37,7 +37,8 @@ Utilizing `Enum.sort/2`
 
    iex> Enum.sort(["String2", "String11", "String3"], {:desc, MrNatural})
    ["String11", "String3",  "String2"]
-~~~
+```
+
 
 The docs can be found at [https://hexdocs.pm/mr_natural](https://hexdocs.pm/mr_natural).
 
