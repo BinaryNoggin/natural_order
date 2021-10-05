@@ -1,7 +1,7 @@
-defmodule MrNaturalTest do
+defmodule NaturalOrderTest do
   use ExUnit.Case, async: true
   use PropCheck
-  doctest MrNatural
+  doctest NaturalOrder
 
   property "natural sort" do
     forall {a, b} <- {numeric_string(), numeric_string()} do
@@ -9,8 +9,8 @@ defmodule MrNaturalTest do
       |> when_fail(IO.puts("""
           a: #{a}
           b: #{b}
-          compare a -> b: #{MrNatural.compare(a, b)}
-          compare b -> a: #{MrNatural.compare(b, a)}
+          compare a -> b: #{NaturalOrder.compare(a, b)}
+          compare b -> a: #{NaturalOrder.compare(b, a)}
       """))
     end
   end
@@ -18,7 +18,7 @@ defmodule MrNaturalTest do
   property "same string except numbers" do
     forall {{a, ai}, {b, bi}} <- string_numbers() do
       meets_standard_sort_properties(a, b) &&
-      case MrNatural.compare(a, b) do
+      case NaturalOrder.compare(a, b) do
         :eq -> ai == bi
         :lt -> ai < bi
         :gt -> ai > bi
@@ -26,8 +26,8 @@ defmodule MrNaturalTest do
       |> when_fail(IO.puts("""
           a: #{a}
           b: #{b}
-          compare a -> b: #{MrNatural.compare(a, b)}
-          compare b -> a: #{MrNatural.compare(b, a)}
+          compare a -> b: #{NaturalOrder.compare(a, b)}
+          compare b -> a: #{NaturalOrder.compare(b, a)}
       """))
       |> collect(a)
       |> collect(ai)
@@ -38,15 +38,15 @@ defmodule MrNaturalTest do
     upcase_a = String.upcase(a)
     upcase_b = String.upcase(b)
 
-    MrNatural.compare(a, a) == :eq &&
-      case MrNatural.compare(a, b) do
-        :eq -> MrNatural.compare(b, a) == :eq
-        :lt -> MrNatural.compare(b, a) == :gt
-        :gt -> MrNatural.compare(b, a) == :lt
+    NaturalOrder.compare(a, a) == :eq &&
+      case NaturalOrder.compare(a, b) do
+        :eq -> NaturalOrder.compare(b, a) == :eq
+        :lt -> NaturalOrder.compare(b, a) == :gt
+        :gt -> NaturalOrder.compare(b, a) == :lt
       end &&
-      MrNatural.compare(upcase_a, b) == MrNatural.compare(a, b) &&
-      MrNatural.compare(a, upcase_b) == MrNatural.compare(a, b) &&
-      MrNatural.compare(upcase_a, upcase_b) == MrNatural.compare(a, b)
+      NaturalOrder.compare(upcase_a, b) == NaturalOrder.compare(a, b) &&
+      NaturalOrder.compare(a, upcase_b) == NaturalOrder.compare(a, b) &&
+      NaturalOrder.compare(upcase_a, upcase_b) == NaturalOrder.compare(a, b)
   end
 
   def numeric_string do

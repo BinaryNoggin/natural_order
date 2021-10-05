@@ -1,4 +1,4 @@
-defmodule MrNatural do
+defmodule NaturalOrder do
   @moduledoc """
   A utility to compare strings in [natural sort order](https://en.wikipedia.org/wiki/Natural_sort_order).
 
@@ -6,24 +6,24 @@ defmodule MrNatural do
 
   ## Examples of comparing two strings
 
-      iex> MrNatural.compare("String2", "String11")
+      iex> NaturalOrder.compare("String2", "String11")
       :lt
 
-      iex> MrNatural.compare("String11", "String2")
+      iex> NaturalOrder.compare("String11", "String2")
       :gt
 
-      iex> MrNatural.compare("string", "STRING")
+      iex> NaturalOrder.compare("string", "STRING")
       :eq
 
   # Examples with sorting
 
-      iex> Enum.sort(["String2", "String11", "String3"], MrNatural)
+      iex> Enum.sort(["String2", "String11", "String3"], NaturalOrder)
       ["String2", "String3",  "String11"]
 
-      iex> Enum.sort(["String2", "String11", "String3"], {:asc, MrNatural})
+      iex> Enum.sort(["String2", "String11", "String3"], {:asc, NaturalOrder})
       ["String2", "String3",  "String11"]
 
-      iex> Enum.sort(["String2", "String11", "String3"], {:desc, MrNatural})
+      iex> Enum.sort(["String2", "String11", "String3"], {:desc, NaturalOrder})
       ["String11", "String3",  "String2"]
   """
 
@@ -34,15 +34,16 @@ defmodule MrNatural do
 
   ## Examples
 
-      iex> MrNatural.compare("String2", "String11")
+      iex> NaturalOrder.compare("String2", "String11")
       :lt
 
-      iex> MrNatural.compare("String11", "String2")
+      iex> NaturalOrder.compare("String11", "String2")
       :gt
 
-      iex> MrNatural.compare("string", "STRING")
+      iex> NaturalOrder.compare("string", "STRING")
       :eq
   """
+  @spec compare(String.t(), String.t()) :: :eq | :gt | :lt
   def compare(a, b) do
     a = format_item(a)
     b = format_item(b)

@@ -1,4 +1,4 @@
-# MrNatural
+# NaturalOrder
 
 A utility to compare strings in [natural sort order](https://en.wikipedia.org/wiki/Natural_sort_order).
 
@@ -9,7 +9,7 @@ Natural sort order is useful for humans. By default sorting Strings is a lot dif
 ```elixir
 def deps do
   [
-    {:mr_natural, "~> 0.1.0"}
+    {natural_order, "~> 0.2.0"}
   ]
 end
 ```
@@ -19,23 +19,23 @@ end
 To compare two strings directly.
 
 ```elixir
-  iex> MrNatural.compare("String2", "String11")
+  iex> NaturalOrder.compare("String2", "String11")
   :lt
 
-  iex>  MrNatural.compare("String11", "String2")
+  iex>  NaturalOrder.compare("String11", "String2")
   :gt
 ```
 
 Using `Enum.sort/2`
 
 ```elixir
-   iex> Enum.sort(["String2", "String11", "String3"], MrNatural)
+   iex> Enum.sort(["String2", "String11", "String3"], NaturalOrder)
    ["String2", "String3",  "String11"]
 
-   iex> Enum.sort(["String2", "String11", "String3"], {:asc, MrNatural})
+   iex> Enum.sort(["String2", "String11", "String3"], {:asc, NaturalOrder})
    ["String2", "String3",  "String11"]
 
-   iex> Enum.sort(["String2", "String11", "String3"], {:desc, MrNatural})
+   iex> Enum.sort(["String2", "String11", "String3"], {:desc, NaturalOrder})
    ["String11", "String3",  "String2"]
 ```
 

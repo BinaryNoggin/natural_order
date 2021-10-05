@@ -1,11 +1,11 @@
-defmodule MrNatural.MixProject do
+defmodule NaturalOrder.MixProject do
   use Mix.Project
-  @version "0.1.0"
+  @version "0.2.0"
   @github_link "https://github.com/binarynoggin/mr_natural"
 
   def project do
     [
-      app: :mr_natural,
+      app: :natural_order,
       version: @version,
       elixir: "~> 1.10",
       description: "A utility to compare strings in Natural order.",
@@ -13,14 +13,12 @@ defmodule MrNatural.MixProject do
       homepage_url: @github_link,
       package: package(),
       docs: docs(),
-      start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
   end
 
   def application do
     [
-      extra_applications: [:logger]
     ]
   end
 
@@ -35,6 +33,7 @@ defmodule MrNatural.MixProject do
     [
       licenses: ["Apache 2.0"],
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
+      maintainers: ["Binary Noggin", "Amos King"],
       links: %{
         "GitHub" => @github_link,
         "Binary Noggin" => "https://binarynoggin.com"
