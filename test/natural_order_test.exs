@@ -6,31 +6,35 @@ defmodule NaturalOrderTest do
   property "natural sort" do
     forall {a, b} <- {numeric_string(), numeric_string()} do
       meets_standard_sort_properties(a, b)
-      |> when_fail(IO.puts("""
-          a: #{a}
-          b: #{b}
-          compare a -> b: #{NaturalOrder.compare(a, b)}
-          compare b -> a: #{NaturalOrder.compare(b, a)}
-      """))
+      |> when_fail(
+        IO.puts("""
+            a: #{a}
+            b: #{b}
+            compare a -> b: #{NaturalOrder.compare(a, b)}
+            compare b -> a: #{NaturalOrder.compare(b, a)}
+        """)
+      )
     end
   end
 
   property "same string except numbers" do
     forall {{a, ai}, {b, bi}} <- string_numbers() do
       meets_standard_sort_properties(a, b) &&
-      case NaturalOrder.compare(a, b) do
-        :eq -> ai == bi
-        :lt -> ai < bi
-        :gt -> ai > bi
-      end
-      |> when_fail(IO.puts("""
-          a: #{a}
-          b: #{b}
-          compare a -> b: #{NaturalOrder.compare(a, b)}
-          compare b -> a: #{NaturalOrder.compare(b, a)}
-      """))
-      |> collect(a)
-      |> collect(ai)
+        case NaturalOrder.compare(a, b) do
+          :eq -> ai == bi
+          :lt -> ai < bi
+          :gt -> ai > bi
+        end
+        |> when_fail(
+          IO.puts("""
+              a: #{a}
+              b: #{b}
+              compare a -> b: #{NaturalOrder.compare(a, b)}
+              compare b -> a: #{NaturalOrder.compare(b, a)}
+          """)
+        )
+        |> collect(a)
+        |> collect(ai)
     end
   end
 
@@ -50,6 +54,7 @@ defmodule NaturalOrderTest do
   def string_numbers do
     let {text, x1, x2} <- {string(), non_neg_integer(), non_neg_integer()} do
       {first, last} = String.split_at(text, x1)
+
       {
         {first <> to_string(x1) <> last, x1},
         {first <> to_string(x2) <> last, x2}
