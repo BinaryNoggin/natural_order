@@ -2,7 +2,7 @@ defmodule NaturalOrder do
   @moduledoc """
   A utility to compare strings in [natural sort order](https://en.wikipedia.org/wiki/Natural_sort_order).
 
-  Natural sort order is useful for humans. By default sorting Strings is a lot differently
+  Natural sort order is useful for humans. By default sorting Strings is a lot differently.
 
   ## Examples of comparing two strings
 
@@ -44,35 +44,35 @@ defmodule NaturalOrder do
       :eq
   """
   @spec compare(String.t(), String.t()) :: :eq | :gt | :lt
-  def compare(a, b) do
-    a = format_item(a)
-    b = format_item(b)
-
-    cond do
-      a == b ->
-        :eq
-      a < b ->
-        :lt
-      a > b ->
-        :gt
-    end
+  def compare(string1, string2) when is_binary(string1) and is_binary(string2) do
+    compare_formatted(format(string1), format(string2))
   end
 
-  defp convert_integers(a) do
-    if Regex.match?(@has_integers, a) do
-      String.to_integer(a)
+  defp compare_formatted(string1, string1),
+    do: :eq
+
+  defp compare_formatted(string1, string2) when string1 < string2,
+    do: :lt
+
+  defp compare_formatted(_string1, _string2),
+    do: :gt
+
+  defp convert_integers(string) do
+    if Regex.match?(@has_integers, string) do
+      String.to_integer(string)
     else
-      a
+      string
     end
   end
 
-  defp format_item(item) do
-    item
+  defp format(string) do
+    string
     |> String.downcase()
     |> split_integers(~r/(\p{Nd}+)|(\p{L}+)/u)
     |> List.flatten()
     |> Enum.map(&convert_integers/1)
   end
 
-  defp split_integers(string, regex), do: Regex.scan(regex, string, capture: :all_but_first)
+  defp split_integers(string, regex),
+    do: Regex.scan(regex, string, capture: :all_but_first)
 end
