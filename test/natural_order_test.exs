@@ -39,13 +39,28 @@ defmodule NaturalOrderTest do
   end
 
   test "shuffled lists must return the same ordered result" do
-    assert Enum.sort(~W(a/8 A/8 b/8), {:asc, NaturalOrder}) == Enum.sort(~W(b/8 A/8 a/8), {:asc, NaturalOrder})
+    assert Enum.sort(~W(a/8 A/8 b/8), {:asc, NaturalOrder}) ==
+             Enum.sort(~W(b/8 A/8 a/8), {:asc, NaturalOrder})
   end
 
   test "inequalities" do
     assert NaturalOrder.compare("A+1", "A-2") != :eq
     assert NaturalOrder.compare("A+1", "a+1") != :eq
     assert NaturalOrder.compare("string", "STRING") != :eq
+  end
+
+  test "with diacritics" do
+    assert Enum.sort(~W(a/8 A/8 b/8), {:asc, NaturalOrder}) ==
+             Enum.sort(~W(b/8 A/8 a/8), {:asc, NaturalOrder})
+
+    assert Enum.sort(~W(ź/2 z/3 z/2 å/8 a/8 áb/8), {:asc, NaturalOrder}) == [
+             "a/8",
+             "å/8",
+             "áb/8",
+             "z/2",
+             "z/3",
+             "ź/2"
+           ]
   end
 
   def meets_standard_sort_properties(a, b) do

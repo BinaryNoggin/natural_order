@@ -94,20 +94,29 @@ defmodule NaturalOrder do
   end
 
   defp normalize_string(string) do
-    normalized = to_integer(string)
-
-    {downcase(normalized), normalized, string}
+    with {:kept, string} <- to_integer(string),
+         ascii <- to_ascii(string),
+         normalized <- downcase(ascii) do
+      {normalized, string}
+    else
+      {:integer_converted, integer} ->
+        {integer, string}
+    end
   end
 
   defp to_integer(<<char, _rest::binary>> = string) when char in ?0..?9,
-    do: String.to_integer(string)
+    do: {:integer_converted, String.to_integer(string)}
 
   defp to_integer(string),
-    do: string
+    do: {:kept, string}
 
   defp downcase(string) when is_binary(string),
     do: String.downcase(string)
 
   defp downcase(string),
     do: string
+
+  defp to_ascii(string) do
+    String.normalize(string, :nfd) |> String.replace(~r/\W/u, "")
+  end
 end
