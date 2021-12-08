@@ -1,7 +1,7 @@
 defmodule NaturalOrder.MixProject do
   use Mix.Project
   @version "0.2.0"
-  @github_link "https://github.com/binarynoggin/mr_natural"
+  @github_link "https://github.com/binarynoggin/natural_order"
 
   def project do
     [
