@@ -35,18 +35,12 @@ defmodule NaturalOrderTest do
   end
 
   def meets_standard_sort_properties(a, b) do
-    upcase_a = String.upcase(a)
-    upcase_b = String.upcase(b)
-
     NaturalOrder.compare(a, a) == :eq &&
       case NaturalOrder.compare(a, b) do
         :eq -> NaturalOrder.compare(b, a) == :eq
         :lt -> NaturalOrder.compare(b, a) == :gt
         :gt -> NaturalOrder.compare(b, a) == :lt
-      end &&
-      NaturalOrder.compare(upcase_a, b) == NaturalOrder.compare(a, b) &&
-      NaturalOrder.compare(a, upcase_b) == NaturalOrder.compare(a, b) &&
-      NaturalOrder.compare(upcase_a, upcase_b) == NaturalOrder.compare(a, b)
+      end
   end
 
   def numeric_string do

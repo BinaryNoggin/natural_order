@@ -13,6 +13,9 @@ defmodule NaturalOrder do
       :gt
 
       iex> NaturalOrder.compare("string", "STRING")
+      :gt
+
+      iex> NaturalOrder.compare("string", "string")
       :eq
 
   # Examples with sorting
@@ -27,10 +30,8 @@ defmodule NaturalOrder do
       ["String11", "String3",  "String2"]
   """
 
-  @has_integers ~r/\p{Nd}+/u
-
   @doc """
-  Compares two strings ignoring case and in natural sort order.
+  Compares two strings in natural sort order.
 
   ## Examples
 
@@ -41,38 +42,72 @@ defmodule NaturalOrder do
       :gt
 
       iex> NaturalOrder.compare("string", "STRING")
+      :gt
+
+      iex> NaturalOrder.compare("string", "string")
       :eq
+
   """
-  @spec compare(String.t(), String.t()) :: :eq | :gt | :lt
+  @spec compare(String.t(), String.t()) :: :lt | :eq | :gt
   def compare(string1, string2) when is_binary(string1) and is_binary(string2) do
     compare_formatted(format(string1), format(string2))
   end
 
-  defp compare_formatted(string1, string1),
+  defp compare_formatted([], []),
     do: :eq
 
-  defp compare_formatted(string1, string2) when string1 < string2,
+  defp compare_formatted([], [_head2 | _tail2]),
     do: :lt
 
-  defp compare_formatted(_string1, _string2),
+  defp compare_formatted([_head1 | _tail1], []),
     do: :gt
 
-  defp convert_integers(string) do
-    if Regex.match?(@has_integers, string) do
-      String.to_integer(string)
-    else
-      string
+  defp compare_formatted([head1 | tail1], [head2 | tail2])
+       when is_tuple(head1) and is_tuple(head2) do
+    case compare_formatted_tuple(head1, head2) do
+      :eq -> compare_formatted(tail1, tail2)
+      other -> other
     end
   end
 
+  defp compare_formatted_tuple(tuple1, tuple1),
+    do: :eq
+
+  defp compare_formatted_tuple(tuple1, tuple2) when tuple1 <= tuple2,
+    do: :lt
+
+  defp compare_formatted_tuple(_tuple1, _tuple2),
+    do: :gt
+
   defp format(string) do
     string
-    |> String.downcase()
-    |> split_integers(~r/(\p{Nd}+)|(\p{L}+)/u)
-    |> List.flatten()
-    |> Enum.map(&convert_integers/1)
+    |> split()
+    |> normalize()
   end
 
-  defp split_integers(string, regex),
-    do: Regex.scan(regex, string, capture: :all_but_first)
+  defp split(string) do
+    Regex.split(~r/([0-9]+)|(\p{L}+)/u, string, include_captures: true, trim: true)
+  end
+
+  defp normalize(list) when is_list(list) do
+    Enum.map(list, &normalize_string/1)
+  end
+
+  defp normalize_string(string) do
+    normalized = to_integer(string)
+
+    {downcase(normalized), normalized, string}
+  end
+
+  defp to_integer(<<char, _rest::binary>> = string) when char in ?0..?9,
+    do: String.to_integer(string)
+
+  defp to_integer(string),
+    do: string
+
+  defp downcase(string) when is_binary(string),
+    do: String.downcase(string)
+
+  defp downcase(string),
+    do: string
 end
