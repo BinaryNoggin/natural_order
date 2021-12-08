@@ -40,5 +40,5 @@ Using `Enum.sort/2`
 ```
 
 
-The docs can be found at [https://hexdocs.pm/mr_natural](https://hexdocs.pm/mr_natural).
+The docs can be found at [https://hexdocs.pm/mr_natural](https://hexdocs.pm/natural_order).
 
