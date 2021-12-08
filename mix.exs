@@ -18,8 +18,7 @@ defmodule NaturalOrder.MixProject do
   end
 
   def application do
-    [
-    ]
+    []
   end
 
   defp deps do
