@@ -9,7 +9,7 @@ Natural sort order is useful for humans. By default sorting Strings is a lot dif
 ```elixir
 def deps do
   [
-    {:natural_order, "~> 0.2.0"}
+    {:natural_order, "~> 0.3.0"}
   ]
 end
 ```
